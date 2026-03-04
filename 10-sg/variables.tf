@@ -12,3 +12,22 @@ variable "sg_tags" {
     }
 }
 
+variable "sg_names" {
+    type = list
+    default = [
+        # DATABASES
+        "mongodb", "redis","mysql","rabbitmq",
+        # BACKEND
+        "catalogue","user","cart","shipping","payment",
+        # BACKEND ALB
+        "backend_alb",
+        #FRONTEND
+        "frontend",
+        #FRONTEND ALB
+        "frontend_alb",
+        #BASTION
+        "bastion"
+    ]
+}
+
+
