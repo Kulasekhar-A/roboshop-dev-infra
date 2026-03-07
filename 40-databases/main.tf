@@ -125,7 +125,7 @@ resource "aws_instance" "rabbitmq" {
   
   tags = merge ( 
     { 
-      Name = "${var.project}-${var.environment}-rabbitmq" 
+      Name = "${var.project}-${var.environment}-rabbitmq ${var.environment}" 
     }, 
     local.common_tags 
   ) 
@@ -151,7 +151,7 @@ resource "terraform_data" "rabbitmq" {
   provisioner "remote-exec" { 
     inline = [ 
       "chmod +x /tmp/bootstrap.sh", 
-      "sudo sh /tmp/bootstrap.sh rabbitmq" 
+      "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}" 
     ] 
   } 
 }

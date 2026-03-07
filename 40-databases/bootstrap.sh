@@ -1,6 +1,7 @@
 #!/bin/bash
 
 component=$1
+environment=$2
 dnf install ansible -y
 
 #sudo pip3.9 install boto3 botocore
@@ -10,4 +11,4 @@ git clone https://github.com/Kulasekhar-A/ansible-roboshop-roles-tf.git
 
 cd ansible-roboshop-roles-tf
 git pull
-ansible-playbook -e component=$component roboshop.yaml
+ansible-playbook -e component=$component -e environment=$environment roboshop.yaml
