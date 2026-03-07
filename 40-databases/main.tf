@@ -1,12 +1,16 @@
- resource "aws_instance" "mongodb" {
+ resource "aws_instance" "database" {
+  for_each = local.databases
+
   ami           = local.ami_id
   instance_type = "t3.micro"
   subnet_id = local.database_subnet_id
-  vpc_security_group_ids = [local.mongodb_sg_id]
+  vpc_security_group_ids = [each.value]
+  iam_instance_profile = each.key == "mysql" ? aws_iam_instance_profile.mysql.name : each.key == "rabbitmq" ? aws_iam_instance_profile.rabbitmq.name : null
+  
   
   tags = merge (
     {
-        Name = "${var.project}-${var.environment}-mongodb"
+        Name = "${var.project}-${var.environment}-$(each.key)"
     },
     local.common_tags
   )
@@ -14,15 +18,16 @@
 }
 
 resource "terraform_data" "bootstrap_mongodb" {
+  for_each = aws_instance.database
   triggers_replace = [
-    aws_instance.mongodb.id
+    each.value.id
   ]
 
   connection {
     type     = "ssh"
     user     = "ec2-user"
     password = local.ssh_password
-    host     = aws_instance.mongodb.private_ip
+    host     = each.value.private_ip
   }
   
   provisioner "file" {
@@ -33,131 +38,8 @@ resource "terraform_data" "bootstrap_mongodb" {
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mongodb"
+        "sudo sh /tmp/bootstrap.sh $(each.key)"
     ]
   }
 }
 
-resource "aws_instance" "redis" {
-  ami           = local.ami_id
-  instance_type = "t3.micro"
-  subnet_id = local.database_subnet_id
-  vpc_security_group_ids = [local.redis_sg_id]
-  
-  tags = merge (
-    {
-        Name = "${var.project}-${var.environment}-redis"
-    },
-    local.common_tags
-  )
-    
-}
-
-resource "terraform_data" "bootstrap_redis" {
-  triggers_replace = [
-    aws_instance.redis.id
-  ]
-
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    password = local.ssh_password
-    host     = aws_instance.redis.private_ip
-  }
-  
-  provisioner "file" {
-    source      = "bootstrap.sh"
-    destination = "/tmp/bootstrap.sh" # Must be an absolute path
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-        "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh redis"
-    ]
-  }
-}
-
-resource "aws_instance" "mysql" {
-  ami           = local.ami_id
-  instance_type = "t3.micro"
-  subnet_id = local.database_subnet_id
-  vpc_security_group_ids = [local.mysql_sg_id]
-  iam_instance_profile = aws_iam_instance_profile.mysql.name
-  
-  tags = merge (
-    {
-        Name = "${var.project}-${var.environment}-mysql"
-    },
-    local.common_tags
-  )
-    
-}
-
-resource "terraform_data" "bootstrap_mysql" {
-  triggers_replace = [
-    aws_instance.mysql.id
-  ]
-
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    password = local.ssh_password
-    host     = aws_instance.mysql.private_ip
-  }
-  
-  provisioner "file" {
-    source      = "bootstrap.sh"
-    destination = "/tmp/bootstrap.sh" # Must be an absolute path
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-        "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mysql"
-    ]
-  }
-} 
-
- resource "aws_instance" "rabbitmq" {
-  ami           = local.ami_id
-  instance_type = "t3.micro"
-  subnet_id = local.database_subnet_id
-  vpc_security_group_ids = [local.rabbitmq_sg_id]
-   iam_instance_profile = aws_iam_instance_profile.rabbitmq.name
-
-  tags = merge (
-    {
-        Name = "${var.project}-${var.environment}-rabbitmq"
-    },
-    local.common_tags
-  )
-    
-}
-
-resource "terraform_data" "bootstrap_rabbitmq" {
-  triggers_replace = [
-    aws_instance.rabbitmq.id
-  ]
-
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    password = local.ssh_password
-    host     = aws_instance.rabbitmq.private_ip
-  }
-  
-  provisioner "file" {
-    source      = "bootstrap.sh"
-    destination = "/tmp/bootstrap.sh" # Must be an absolute path
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-        "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh rabbitmq"
-    ]
-  }
-}
-
-  
