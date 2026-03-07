@@ -68,3 +68,19 @@ resource "aws_iam_role" "rabbitmq" {
     local.common_tags
   )
 }  
+
+resource "aws_iam_policy" "rabbitmq" {
+  name        = local.rabbitmq_policy_name
+  description = "A policy for Rabbitmq EC2 instance"
+  policy      = file("rabbitmq-iam-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "rabbitmq" {
+  role       = aws_iam_role.rabbitmq.name
+  policy_arn = aws_iam_policy.rabbitmq.arn
+}
+
+resource "aws_iam_instance_profile" "rabbitmq" {
+  name = "${var.project}-${var.environment}-rabbitmq"
+  role = aws_iam_role.rabbitmq.name
+}
