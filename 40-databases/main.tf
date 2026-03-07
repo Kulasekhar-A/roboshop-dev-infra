@@ -111,7 +111,7 @@ resource "terraform_data" "mysql" {
   provisioner "remote-exec" { 
     inline = [ 
       "chmod +x /tmp/bootstrap.sh", 
-      "sudo sh /tmp/bootstrap.sh mysql" 
+      "sudo sh /tmp/bootstrap.sh mysql ${var.environment}" 
     ]
   } 
 }
@@ -125,7 +125,7 @@ resource "aws_instance" "rabbitmq" {
   
   tags = merge ( 
     { 
-      Name = "${var.project}-${var.environment}-rabbitmq ${var.environment}" 
+      Name = "${var.project}-${var.environment}-rabbitmq" 
     }, 
     local.common_tags 
   ) 
