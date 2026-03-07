@@ -37,3 +37,7 @@ data "aws_ssm_parameter" "msql_sg_id" {
  data "aws_ssm_parameter" "rabbitmq_sg_id" {
   name = "/${var.project}/${var.environment}/rabbitmq_sg_id"
 } 
+
+data "aws_ssm_parameter" "ssh_password" {
+  name = "/${var.project}/${var.environment}/ssh_password"
+}
