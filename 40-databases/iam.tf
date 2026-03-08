@@ -76,8 +76,7 @@ resource "aws_iam_policy" "rabbitmq" {
   description = "A policy for Rabbitmq EC2 instance"
   policy      = templatefile("rabbitmq-iam-policy.json", {
                 environment = var.environment
-  }
- )
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "rabbitmq" {
