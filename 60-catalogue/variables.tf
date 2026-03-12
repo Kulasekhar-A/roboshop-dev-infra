@@ -16,3 +16,6 @@ variable "domain_name" {
     default = "annuru.online"
 }
 
+variable "app_version" {
+    default = v3
+}
