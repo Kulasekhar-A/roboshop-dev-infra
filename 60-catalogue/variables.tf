@@ -17,5 +17,5 @@ variable "domain_name" {
 }
 
 variable "app_version" {
-    default = v3
+    default = "v3"
 }
