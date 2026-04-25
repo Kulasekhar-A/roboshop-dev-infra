@@ -9,11 +9,17 @@ It follows a modular and scalable approach to build real-world cloud infrastruct
 This project automates the provisioning of:
 
 VPC and networking components
+
 Security groups and access rules
+
 Bastion host for secure access
+
 Application Load Balancers (Frontend & Backend)
+
 Application infrastructure
+
 Databases and messaging systems
+
 SSL certificates and CDN
 
 VPN access
@@ -27,32 +33,56 @@ Linux
 OpenVPN
 
 📂 Repository Structure
+
 🌐 Networking
 00-vpc → VPC, subnets, routing
+
 🔐 Security
 10-sg → Security groups
+
 20-sg-rules → Security group rules
+
 🖥️ Access
 30-bastion → Bastion host
+
 98-openvpn → VPN setup
+
 🧱 Data Layer
+
 40-databases → Database infrastructure
+
 ⚖️ Load Balancing
+
 50-backend-alb → Backend ALB
+
 80-frontend-alb → Frontend ALB
+
 🔧 Application Layer
+
 60-catalogue → Sample service setup
+
 90-components → Other services
+
 🔐 Security & CDN
+
 70-acm → SSL certificates
+
 95-cdn → CloudFront setup
+
 📌 Prerequisites
+
 AWS account
+
 AWS CLI configured (aws configure)
+
 Terraform installed
+
 IAM user with required permissions
+
 🛠️ Setup
+
 Initialize Terraform
+
 terraform init
 ▶️ Usage
 Plan Infrastructure
