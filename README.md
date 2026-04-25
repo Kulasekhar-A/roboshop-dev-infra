@@ -84,39 +84,69 @@ IAM user with required permissions
 Initialize Terraform
 
 terraform init
+
 ▶️ Usage
+
 Plan Infrastructure
+
 terraform plan
+
 Apply Infrastructure
+
 terraform apply
+
 Destroy Infrastructure
+
 terraform destroy
+
 🔄 What This Project Does
+
 Provisions VPC with public and private subnets
+
 Configures security groups and rules
+
 Deploys bastion host for secure access
+
 Sets up backend and frontend load balancers
+
 Provisions databases and supporting services
+
 Configures SSL using ACM
+
 Deploys CDN using CloudFront
+
 Enables VPN-based secure connectivity
+
 🎯 Use Cases
+
 Dev environment setup
+
 Infrastructure automation
+
 Multi-tier application deployment
+
 Secure AWS architecture
+
 💡 Key Highlights
+
 Modular Terraform design
+
 Scalable and reusable infrastructure
+
 Secure access using Bastion and VPN
+
 Real-world DevOps implementation
+
 Infrastructure provisioning in minutes
 
 📈 Learning Outcomes
 
 Advanced Terraform usage
+
 AWS networking and security
+
 Load balancing and CDN concepts
+
 Infrastructure as Code best practices
 
 🤝 Contributions
