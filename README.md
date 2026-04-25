@@ -15,12 +15,17 @@ Application Load Balancers (Frontend & Backend)
 Application infrastructure
 Databases and messaging systems
 SSL certificates and CDN
+
 VPN access
+
 ⚙️ Tech Stack
+
 Terraform
 AWS (VPC, EC2, ALB, ACM, CloudFront)
+
 Linux
 OpenVPN
+
 📂 Repository Structure
 🌐 Networking
 00-vpc → VPC, subnets, routing
@@ -76,11 +81,14 @@ Scalable and reusable infrastructure
 Secure access using Bastion and VPN
 Real-world DevOps implementation
 Infrastructure provisioning in minutes
+
 📈 Learning Outcomes
+
 Advanced Terraform usage
 AWS networking and security
 Load balancing and CDN concepts
 Infrastructure as Code best practices
+
 🤝 Contributions
 
 Feel free to fork the repository and raise pull requests.
